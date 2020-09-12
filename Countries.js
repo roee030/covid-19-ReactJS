@@ -1,6 +1,6 @@
-// const countriesAPI =
-//   "https://cors-anywhere.herokuapp.com/http://restcountries.herokuapp.com/api/v1";
-const countriesAPI = "http://restcountries.herokuapp.com/api/v1";
+const countriesAPI =
+  "https://cors-anywhere.herokuapp.com/http://restcountries.herokuapp.com/api/v1";
+// const countriesAPI = "http://restcountries.herokuapp.com/api/v1";
 const coronaAPI = `https://corona-api.com/countries/`;
 const asiaBTN = document.querySelector(".Asia-btn");
 const europeBTN = document.querySelector(".Europe-btn");
