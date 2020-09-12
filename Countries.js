@@ -7,10 +7,14 @@ const europeBTN = document.querySelector(".Europe-btn");
 const africaBTN = document.querySelector(".Africa-btn");
 const americasBTN = document.querySelector(".Americas-btn");
 const worldBTN = document.querySelector(".World-btn");
+const confirmedBTN = document.querySelector(".Confirmed-btn");
+const deathsBTN = document.querySelector(".Deaths-btn");
+const recoverBTN = document.querySelector(".Recover-btn");
+const criticalBTN = document.querySelector(".Critical-btn");
 const table = document.querySelector("#myChart");
 var ctx = document.getElementById("myChart").getContext("2d");
 const state = {
-  currentMainland: "",
+  currentMainland: "Asia",
   world: [],
   Asia: [],
   Europe: [],
@@ -136,6 +140,31 @@ function displayChart(countryList, dataset) {
     },
   });
 }
+function getcountryList() {
+  const e = state.currentMainland + "Countries";
+  const d = state[e];
+  return d;
+}
+function getConfirmedList() {
+  const e = state.currentMainland + "Confirmed";
+  const d = state[e];
+  return d;
+}
+function getDeathsList() {
+  const e = state.currentMainland + "Deaths";
+  const d = state[e];
+  return d;
+}
+function getRecoverList() {
+  const e = state.currentMainland + "Recovered";
+  const d = state[e];
+  return d;
+}
+function getCriticalList() {
+  const e = state.currentMainland + "Critical";
+  const d = state[e];
+  return d;
+}
 //Event listener
 asiaBTN.addEventListener("click", function () {
   state.currentMainland = this.innerHTML;
@@ -152,4 +181,24 @@ africaBTN.addEventListener("click", function () {
 americasBTN.addEventListener("click", function () {
   state.currentMainland = this.innerHTML;
   displayChart(state.AmericasCountries, state.AmericasConfirmed);
+});
+confirmedBTN.addEventListener("click", function () {
+  const countryList = getcountryList();
+  const confirmedList = getConfirmedList();
+  displayChart(countryList, confirmedList);
+});
+deathsBTN.addEventListener("click", function () {
+  const countryList = getcountryList();
+  const deathsList = getDeathsList();
+  displayChart(countryList, deathsList);
+});
+recoverBTN.addEventListener("click", function () {
+  const countryList = getcountryList();
+  const recoverList = getRecoverList();
+  displayChart(countryList, recoverList);
+});
+criticalBTN.addEventListener("click", function () {
+  const countryList = getcountryList();
+  const criticalList = getCriticalList();
+  displayChart(countryList, criticalList);
 });
