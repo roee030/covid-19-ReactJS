@@ -2,14 +2,40 @@
 //   "https://cors-anywhere.herokuapp.com/http://restcountries.herokuapp.com/api/v1";
 const countriesAPI = "http://restcountries.herokuapp.com/api/v1";
 const coronaAPI = `https://corona-api.com/countries/`;
+const asiaBTN = document.querySelector(".Asia-btn");
+const europeBTN = document.querySelector(".Europe-btn");
+const africaBTN = document.querySelector(".Africa-btn");
+const americasBTN = document.querySelector(".Americas-btn");
+const worldBTN = document.querySelector(".World-btn");
+const table = document.querySelector("#myChart");
 var ctx = document.getElementById("myChart").getContext("2d");
 const state = {
+  currentMainland: "",
   world: [],
   Asia: [],
   Europe: [],
   Africa: [],
   Americas: [],
   AsiaCountries: [],
+  AsiaConfirmed: [],
+  AsiaCritical: [],
+  AsiaDeaths: [],
+  AsiaRecovered: [],
+  AmericasCountries: [],
+  AmericasConfirmed: [],
+  AmericasCritical: [],
+  AmericasDeaths: [],
+  AmericasRecovered: [],
+  EuropeCountries: [],
+  EuropeConfirmed: [],
+  EuropeCritical: [],
+  EuropeDeaths: [],
+  EuropeRecovered: [],
+  AfricaCountries: [],
+  AfricaConfirmed: [],
+  AfricaCritical: [],
+  AfricaDeaths: [],
+  AfricaRecovered: [],
 };
 (async function getAllCountries() {
   try {
@@ -25,18 +51,34 @@ const state = {
         case "Asia":
           state.Asia.push(myObj);
           state.AsiaCountries.push(myObj.countryName);
+          state.AsiaConfirmed.push(myObj.coronaData.confirmed);
+          state.AsiaCritical.push(myObj.coronaData.critical);
+          state.AsiaDeaths.push(myObj.coronaData.deaths);
+          state.AsiaRecovered.push(myObj.coronaData.recovered);
           break;
         case "Americas":
           state.Americas.push(myObj);
+          state.AmericasCountries.push(myObj.countryName);
+          state.AmericasConfirmed.push(myObj.coronaData.confirmed);
+          state.AmericasCritical.push(myObj.coronaData.critical);
+          state.AmericasDeaths.push(myObj.coronaData.deaths);
+          state.AmericasRecovered.push(myObj.coronaData.recovered);
           break;
         case "Europe":
           state.Europe.push(myObj);
+          state.EuropeCountries.push(myObj.countryName);
+          state.EuropeConfirmed.push(myObj.coronaData.confirmed);
+          state.EuropeCritical.push(myObj.coronaData.critical);
+          state.EuropeDeaths.push(myObj.coronaData.deaths);
+          state.EuropeRecovered.push(myObj.coronaData.recovered);
           break;
         case "Africa":
           state.Africa.push(myObj);
-          break;
-        case "Asia":
-          state.asia.push(myObj);
+          state.AfricaCountries.push(myObj.countryName);
+          state.AfricaConfirmed.push(myObj.coronaData.confirmed);
+          state.AfricaCritical.push(myObj.coronaData.critical);
+          state.AfricaDeaths.push(myObj.coronaData.deaths);
+          state.AfricaRecovered.push(myObj.coronaData.recovered);
           break;
       }
       state.world.push(myObj);
@@ -44,7 +86,7 @@ const state = {
   } catch (e) {
     console.log("cannot get the countries list");
   }
-  displayChart();
+  displayChart(state.AsiaCountries, state.AsiaConfirmed);
 
   console.log(state);
 })();
@@ -66,15 +108,16 @@ async function getCoronaData(countryCode) {
   }
 }
 
-function displayChart() {
+function displayChart(countryList, dataset) {
+  table.style.visibility = "visible";
   var myChart = new Chart(ctx, {
     type: "line",
     data: {
-      labels: state.AsiaCountries,
+      labels: countryList,
       datasets: [
         {
           label: "# of Votes",
-          data: [12, 19, 3, 5, 2, 3],
+          data: dataset,
 
           borderWidth: 1,
         },
@@ -93,3 +136,20 @@ function displayChart() {
     },
   });
 }
+//Event listener
+asiaBTN.addEventListener("click", function () {
+  state.currentMainland = this.innerHTML;
+  displayChart(state.AsiaCountries, state.AsiaConfirmed);
+});
+europeBTN.addEventListener("click", function () {
+  state.currentMainland = this.innerHTML;
+  displayChart(state.EuropeCountries, state.EuropeConfirmed);
+});
+africaBTN.addEventListener("click", function () {
+  state.currentMainland = this.innerHTML;
+  displayChart(state.AfricaCountries, state.AfricaConfirmed);
+});
+americasBTN.addEventListener("click", function () {
+  state.currentMainland = this.innerHTML;
+  displayChart(state.AmericasCountries, state.AmericasConfirmed);
+});
